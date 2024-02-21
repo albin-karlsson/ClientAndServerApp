@@ -1,0 +1,41 @@
+﻿@page "/"
+@using ClientApp.Services
+@using Newtonsoft.Json
+@using Shared
+@inject IAnimalsService animalsService
+
+<PageTitle>Home</PageTitle>
+
+<!-- Knappar -->
+<Button Title="Button nr 1" />
+<Button Title="Button nr 2" />
+<Button Title="Button nr 3" />
+
+@if(animals != null)
+{
+    <ul>
+        @foreach(AnimalModel animal in animals)
+        {
+            <li>
+                <p><strong>Name:</strong> @animal.Name</p>
+                <p><strong>Type:</strong> @animal.Type</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<AnimalModel>? animals;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            animals = await animalsService.GetAnimals();
+        }
+        catch
+        {
+            
+        }
+    }
+}
