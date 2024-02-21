@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using ClientApp.Models;
+using Newtonsoft.Json;
 using Shared;
+using System.Net.Http.Json;
 
 namespace ClientApp.Services
 {
@@ -31,9 +33,9 @@ namespace ClientApp.Services
             throw new HttpRequestException();
         }
 
-        public void PostAnimal(AnimalModel model)
+        public async Task PostAnimal(AnimalViewModel viewModel)
         {
-            throw new NotImplementedException();
+            await Client.PostAsJsonAsync("animals", viewModel);
         }
     }
 }

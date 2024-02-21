@@ -34,5 +34,18 @@ namespace ServerApp.Controllers
         {
             return Ok(Animals);
         }
+
+        [HttpPost]
+        public ActionResult Post(AnimalModel model)
+        {
+            if (model != null)
+            {
+                Animals.Add(model);
+
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

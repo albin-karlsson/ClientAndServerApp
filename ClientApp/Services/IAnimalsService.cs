@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using ClientApp.Models;
+using Shared;
 
 namespace ClientApp.Services
 {
@@ -10,8 +11,8 @@ namespace ClientApp.Services
         /// Denna text dyker upp när man håller på metoden
         /// </summary>
         /// <returns>En lista med animals</returns>
-        public Task<List<AnimalModel>> GetAnimals();
+        public Task<List<AnimalModel>> GetAnimals(); // TODO: Change to ViewModel
 
-        public void PostAnimal(AnimalModel model);
+        public Task PostAnimal(AnimalViewModel viewModel);
     }
 }

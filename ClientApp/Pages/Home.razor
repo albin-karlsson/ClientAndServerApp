@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using ClientApp.Models
 @using ClientApp.Services
 @using Newtonsoft.Json
 @using Shared
@@ -6,10 +7,19 @@
 
 <PageTitle>Home</PageTitle>
 
-<!-- Knappar -->
-<Button Title="Button nr 1" />
-<Button Title="Button nr 2" />
-<Button Title="Button nr 3" />
+<EditForm Model="NewAnimal" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <InputText @bind-Value="NewAnimal.Name"></InputText>
+    <InputText @bind-Value="NewAnimal.Type"></InputText>
+    <input type="submit" value="Create new animal"/>
+</EditForm>
+
+@if(isLoading)
+{
+    <h2>Loading. . . </h2>
+}
 
 @if(animals != null)
 {
@@ -25,7 +35,20 @@
 }
 
 @code {
-    private List<AnimalModel>? animals;
+    private List<AnimalModel>? animals; // TODO: Change (project) to ViewModel in Service
+    private bool isLoading;
+
+    public AnimalViewModel NewAnimal { get; set; } = new();
+
+    private async Task HandleSubmit()
+    {
+        isLoading = true;
+
+        // Skicka det nya animalet till API:t
+        await animalsService.PostAnimal(NewAnimal);
+
+        isLoading = false;
+    }
 
     protected override async Task OnInitializedAsync()
     {
